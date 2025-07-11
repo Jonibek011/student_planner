@@ -20,7 +20,7 @@ function Home() {
                 Kirish
               </button>
             </Link>
-            <Link to="/register">
+            <Link to="/pricing">
               <button className="btn btn-sm h-[40px] font-medium bg-blue-600 hover:bg-blue-500 text-white">
                 Ro'yxatdan o'tish
               </button>
@@ -61,12 +61,13 @@ function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link href="/register">
-              <button className="text-lg px-10 btn  bg-white text-gray-900 hover:bg-gray-100 rounded-xl font-semibold btn-sm h-[45px] shadow-2xl">
-                Bepul Boshlash <FaArrowRight />
-              </button>
+            <Link
+              to="/dashboard"
+              className="text-lg px-10 btn  bg-white text-gray-900 hover:bg-gray-100 rounded-xl font-semibold btn-sm h-[45px] shadow-2xl"
+            >
+              Bepul Boshlash <FaArrowRight />
             </Link>
-            <Link href="/demo">
+            <Link to="/demo">
               <button className="text-lg px-10 btn btn-sm h-[45px] border border-white/30 text-white hover:bg-white/10 rounded-xl backdrop-blur-sm bg-transparent font-medium hover:text-black">
                 Demo ko'rish
               </button>
@@ -184,9 +185,12 @@ function Home() {
                     Asosiy bildirishnomalar
                   </li>
                 </ul>
-                <buutton className="w-full mt-6 btn bg-blue-600 hover:bg-blue-500 font-medium text-white">
+                <Link
+                  to="/dashboard"
+                  className="w-full mt-6 btn bg-blue-600 hover:bg-blue-500 font-medium text-white"
+                >
                   Bepul Boshlash
-                </buutton>
+                </Link>
               </div>
             </div>
 

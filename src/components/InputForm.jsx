@@ -1,6 +1,6 @@
 import { FiUser, FiLock } from "react-icons/fi";
 import { MdOutlineEmail } from "react-icons/md";
-
+import { FiSearch } from "react-icons/fi";
 function InputForm({ label, name, type, placeholder, require, disable }) {
   return (
     <div className="w-full">
@@ -19,6 +19,7 @@ function InputForm({ label, name, type, placeholder, require, disable }) {
             {name === "user" && <FiUser />}
             {name === "email" && <MdOutlineEmail />}
             {name === "password" && <FiLock />}
+            {name === "search" && <FiSearch />}
           </span>
         </div>
       </label>
