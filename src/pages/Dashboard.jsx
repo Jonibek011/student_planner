@@ -143,7 +143,7 @@ export default function DashboardPage() {
                 {recentAssignments.map((assignment) => (
                   <div
                     key={assignment.id}
-                    className=" flex items-center justify-between p-3 rounded-lg hover:bg-muted transition-colors"
+                    className=" flex items-center hover:bg-gray-100 rounded-xl justify-between p-3   transition-colors"
                   >
                     <div className="">
                       <Link
@@ -162,7 +162,9 @@ export default function DashboardPage() {
                     </div>
                     <div
                       className={
-                        assignment.completed ? "bg-green-500 text-white" : ""
+                        assignment.completed
+                          ? "bg-green-500 text-white badge"
+                          : "badge bg-gray-100"
                       }
                     >
                       {assignment.completed ? "Bajarilgan" : "Kutilmoqda"}
@@ -181,28 +183,33 @@ export default function DashboardPage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="grid gap-3">
-            <button className="w-full justify-start bg-transparent hover:bg-accent hover:text-accent-foreground">
-              <Link href="/assignments/new">
-                <CheckCircle className="mr-2 h-4 w-4" /> Yangi topshiriq
-                qo'shish
-              </Link>
-            </button>
-            <button className="w-full justify-start bg-transparent hover:bg-accent hover:text-accent-foreground">
-              <Link href="/study-sessions/new">
-                <BookOpen className="mr-2 h-4 w-4" /> O'qish sessiyasini
-                boshlash
-              </Link>
-            </button>
-            <button className="w-full justify-start bg-transparent hover:bg-accent hover:text-accent-foreground">
-              <Link href="/goals/new">
-                <CalendarDays className="mr-2 h-4 w-4" /> Yangi maqsad qo'shish
-              </Link>
-            </button>
-            <button className="w-full justify-start bg-transparent hover:bg-accent hover:text-accent-foreground">
-              <Link href="/subjects/new">
-                <BookOpen className="mr-2 h-4 w-4" /> Yangi fan qo'shish
-              </Link>
-            </button>
+            <Link
+              href="/assignments/new"
+              className="btn btn-sm  ps-4 h-10 bg-transparent flex justify-start shadow-none  text-[#09090B] font-thin items-center hover:bg-gray-100 border border-gray-200"
+            >
+              <CheckCircle className=" h-4 w-4" /> Yangi topshiriq qo'shish
+            </Link>
+
+            <Link
+              href="/study-sessions/new"
+              className="btn btn-sm  ps-4 h-10 bg-transparent flex justify-start shadow-none  text-[#09090B] font-thin items-center hover:bg-gray-100 border border-gray-200"
+            >
+              <BookOpen className=" h-4 w-4" /> O'qish sessiyasini boshlash
+            </Link>
+
+            <Link
+              href="/goals/new"
+              className="btn btn-sm  ps-4 h-10 bg-transparent flex justify-start shadow-none  text-[#09090B] font-thin items-center hover:bg-gray-100 border border-gray-200"
+            >
+              <CalendarDays className=" h-4 w-4" /> Yangi maqsad qo'shish
+            </Link>
+
+            <Link
+              href="/subjects/new"
+              className="btn btn-sm  ps-4 h-10 bg-transparent flex justify-start shadow-none  text-[#09090B] font-thin items-center hover:bg-gray-100 border border-gray-200"
+            >
+              <BookOpen className=" h-4 w-4" /> Yangi fan qo'shish
+            </Link>
           </CardContent>
         </Card>
 
@@ -222,13 +229,13 @@ export default function DashboardPage() {
                 {upcomingSessions.map((session) => (
                   <div
                     key={session.id}
-                    className="flex items-center justify-between p-3 rounded-lg hover:bg-muted transition-colors"
+                    className="flex items-center hover:bg-gray-100  justify-between p-3 rounded-xl transition-colors"
                   >
                     <div>
-                      <p className="font-medium text-foreground">
+                      <p className="font-semibold text-[#09090B]">
                         {session.subject?.name}
                       </p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-[#71717A] ">
                         {session.assignment?.title
                           ? `${session.assignment.title} - `
                           : ""}
@@ -240,6 +247,9 @@ export default function DashboardPage() {
                           ? ` - ${format(new Date(session.end_time), "HH:mm")}`
                           : ""}
                       </p>
+                    </div>
+                    <div className="badge bg-gray-100 text-[#09090B] ">
+                      45 daqiqa
                     </div>
                   </div>
                 ))}
