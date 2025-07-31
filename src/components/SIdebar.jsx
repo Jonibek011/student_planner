@@ -14,10 +14,10 @@ function SIdebar({ openSidebar }) {
           </summary>
           <ul className="menu dropdown-content bg-base-100 rounded-xl z-[1] w-full p-2 shadow ">
             <li>
-              <a>Item 1</a>
+              <a>Mening rejam</a>
             </li>
             <li>
-              <a>Item 2</a>
+              <a>Sozlamalar</a>
             </li>
           </ul>
         </details>

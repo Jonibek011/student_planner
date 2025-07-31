@@ -121,10 +121,10 @@ export default function DashboardPage() {
         </Card>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 ">
-        <Card className="col-span-2 shadow-xl border-none bg-white">
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="text-xl font-semibold">
+      <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
+        <Card className="col-span-full xl:col-span-2 shadow-xl border-none bg-white">
+          <CardHeader className="flex flex-col sm:flex-row items-center justify-between">
+            <CardTitle className="sm:text-xl font-semibold">
               Yaqinlashib kelayotgan topshiriqlar
             </CardTitle>
             <button className="btn btn-sm h-9  border border-gray-300 hover:bg-gray-100 bg-transparent">
@@ -148,11 +148,11 @@ export default function DashboardPage() {
                     <div className="">
                       <Link
                         href={`/assignments/${assignment.id}`}
-                        className="font-semibold font-sans text-lg text-[#09090B] hover:underline"
+                        className="font-semibold font-sans sm:text-lg text-[#09090B] hover:underline"
                       >
                         {assignment.title}
                       </Link>
-                      <p className="text-sm text-[#71717A]">
+                      <p className="text-xs sm:text-sm text-[#71717A]">
                         {assignment.subject?.name} -{" "}
                         {format(
                           new Date(assignment.deadline),
@@ -163,8 +163,8 @@ export default function DashboardPage() {
                     <div
                       className={
                         assignment.completed
-                          ? "bg-green-500 text-white badge"
-                          : "badge bg-gray-100"
+                          ? "bg-[#EF4444CC] text-white text-xs sm:text-[16px] badge"
+                          : "badge bg-gray-100 text-xs sm:text-[16px]"
                       }
                     >
                       {assignment.completed ? "Bajarilgan" : "Kutilmoqda"}
@@ -176,7 +176,9 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="shadow-xl border-none bg-white">
+        <Card
+          className={`shadow-xl w-full col-span-full lg:col-span-2 xl:col-span-1 border-none bg-white  `}
+        >
           <CardHeader>
             <CardTitle className="text-xl font-semibold">
               Tezkor harakatlar
@@ -185,35 +187,35 @@ export default function DashboardPage() {
           <CardContent className="grid gap-3">
             <Link
               href="/assignments/new"
-              className="btn btn-sm  ps-4 h-10 bg-transparent flex justify-start shadow-none  text-[#09090B] font-thin items-center hover:bg-gray-100 border border-gray-200"
+              className="btn btn-sm text-xs sm:text-[16px] ps-4 h-10 bg-transparent flex justify-start shadow-none  text-[#09090B] font-thin items-center hover:bg-gray-100 border border-gray-200"
             >
               <CheckCircle className=" h-4 w-4" /> Yangi topshiriq qo'shish
             </Link>
 
             <Link
               href="/study-sessions/new"
-              className="btn btn-sm  ps-4 h-10 bg-transparent flex justify-start shadow-none  text-[#09090B] font-thin items-center hover:bg-gray-100 border border-gray-200"
+              className="btn btn-sm text-xs sm:text-[16px] ps-4 h-10 bg-transparent flex justify-start shadow-none  text-[#09090B] font-thin items-center hover:bg-gray-100 border border-gray-200"
             >
               <BookOpen className=" h-4 w-4" /> O'qish sessiyasini boshlash
             </Link>
 
             <Link
               href="/goals/new"
-              className="btn btn-sm  ps-4 h-10 bg-transparent flex justify-start shadow-none  text-[#09090B] font-thin items-center hover:bg-gray-100 border border-gray-200"
+              className="btn btn-sm text-xs sm:text-[16px] ps-4 h-10 bg-transparent flex justify-start shadow-none  text-[#09090B] font-thin items-center hover:bg-gray-100 border border-gray-200"
             >
               <CalendarDays className=" h-4 w-4" /> Yangi maqsad qo'shish
             </Link>
 
             <Link
               href="/subjects/new"
-              className="btn btn-sm  ps-4 h-10 bg-transparent flex justify-start shadow-none  text-[#09090B] font-thin items-center hover:bg-gray-100 border border-gray-200"
+              className="btn btn-sm text-xs sm:text-[16px] ps-4 h-10 bg-transparent flex justify-start shadow-none  text-[#09090B] font-thin items-center hover:bg-gray-100 border border-gray-200"
             >
               <BookOpen className=" h-4 w-4" /> Yangi fan qo'shish
             </Link>
           </CardContent>
         </Card>
 
-        <Card className="col-span-full shadow-xl border-none bg-white">
+        <Card className="col-span-full lg:col-span-1 xl:col-span-full shadow-xl border-none bg-white">
           <CardHeader>
             <CardTitle className="text-xl font-semibold">
               O'qish sessiyalari
@@ -248,7 +250,7 @@ export default function DashboardPage() {
                           : ""}
                       </p>
                     </div>
-                    <div className="badge bg-gray-100 text-[#09090B] ">
+                    <div className="badge text-[10px] whitespace-nowrap sm:text-[14px] bg-gray-100 text-[#09090B] ">
                       45 daqiqa
                     </div>
                   </div>
