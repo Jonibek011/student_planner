@@ -36,7 +36,7 @@ function MobileSidebar({ setOpenSidebar }) {
             <li>
               <Link
                 onClick={() => setOpenSidebar(false)}
-                to="/register"
+                to="/subjects"
                 className="flex gap-2 items-center font-extralight]"
               >
                 <span>

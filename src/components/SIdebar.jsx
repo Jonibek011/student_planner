@@ -41,7 +41,7 @@ function SIdebar({ openSidebar }) {
 
             <li>
               <NavLink
-                to="/register"
+                to="/subjects"
                 className="flex gap-2 items-center font-extralight]"
               >
                 <span>
