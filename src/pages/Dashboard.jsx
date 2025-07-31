@@ -1,214 +1,253 @@
-import { FiBookOpen } from "react-icons/fi";
-import { FiCalendar } from "react-icons/fi";
-import { CiClock2 } from "react-icons/ci";
-import { FiTarget } from "react-icons/fi";
-import { FiCheckCircle } from "react-icons/fi";
-import { LuCircleAlert } from "react-icons/lu";
-import { FaPlus } from "react-icons/fa6";
-import { IoMdTrendingUp } from "react-icons/io";
-
-//rrd
+import React, { useEffect, useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from ".././components/ui/card";
+import {
+  CalendarDays,
+  BookOpen,
+  CheckCircle,
+  Hourglass,
+  Bell,
+  ArrowRight,
+} from "lucide-react";
 import { Link } from "react-router-dom";
+import { mockDataService, mockUsers } from "../lib/mockData";
+import { format } from "date-fns";
+export default function DashboardPage() {
+  const [dashboardStats, setDashboardStats] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-function Dashboard() {
+  useEffect(() => {
+    const userId = mockUsers[0].id;
+    mockDataService.getDashboardStats(userId).then((data) => {
+      setDashboardStats(data);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh] bg-background rounded-lg shadow-md p-8">
+        <p className="text-lg text-muted-foreground">Yuklanmoqda...</p>
+      </div>
+    );
+  }
+
+  if (!dashboardStats) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh] bg-background rounded-lg shadow-md p-8">
+        <p className="text-lg text-muted-foreground">
+          Ma'lumotlar yuklanmadi. Iltimos, keyinroq urinib ko'ring.
+        </p>
+      </div>
+    );
+  }
+
+  const {
+    userStatistics,
+    recentAssignments,
+    upcomingSessions,
+    unreadNotifications,
+  } = dashboardStats;
   return (
-    <div>
-      <header className="border-b bg-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* ========== */}
-          <div className="navbar bg-base-100 h-16">
-            <div className="flex-1">
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-                <p className="text-sm text-gray-500">Welcome back, userName!</p>
-              </div>
+    <main className="flex flex-1 mx-6  flex-col gap-6 p-6 md:gap-10 md:p-8 bg-gray-50 dark:bg-gray-900 rounded-xl shadow-inner min-h-[90vh]">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <Card className="bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-blue-900 dark:to-indigo-900 shadow-xl border-none transform hover:scale-105 transition-transform duration-300">
+          <CardHeader className="flex flex-row  justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-blue-800 dark:text-blue-200">
+              Jami topshiriqlar
+            </CardTitle>
+            <BookOpen className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-blue-900 dark:text-blue-100">
+              {userStatistics.total_assignments}
             </div>
-            <div className="flex-none">
-              <div className="badge badge-ghost px-3  font-semibold me-5">
-                Free
-              </div>
-              <div className="dropdown dropdown-end">
-                <div
-                  tabIndex={0}
-                  role="button"
-                  className="btn btn-ghost btn-circle avatar"
-                >
-                  <div className="w-10 rounded-full">
-                    <img
-                      alt="Tailwind CSS Navbar component"
-                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                    />
+            <p className="text-xs text-blue-700 dark:text-blue-300 mt-1">
+              {userStatistics.completed_assignments} tasi bajarilgan
+            </p>
+          </CardContent>
+        </Card>
+        <Card className="bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900 dark:to-emerald-900 shadow-xl border-none transform hover:scale-105 transition-transform duration-300">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-green-800 dark:text-green-200">
+              Jami o'qish soatlari
+            </CardTitle>
+            <Hourglass className="h-5 w-5 text-green-600 dark:text-green-400" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-green-900 dark:text-green-100">
+              {userStatistics.total_study_hours} soat
+            </div>
+            <p className="text-xs text-green-700 dark:text-green-300 mt-1">
+              Eng uzun seriya: {userStatistics.longest_streak} kun
+            </p>
+          </CardContent>
+        </Card>
+        <Card className="bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900 dark:to-pink-900 shadow-xl border-none transform hover:scale-105 transition-transform duration-300">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-purple-800 dark:text-purple-200">
+              Joriy seriya
+            </CardTitle>
+            <CalendarDays className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-purple-900 dark:text-purple-100">
+              {userStatistics.streak_days} kun
+            </div>
+            <p className="text-xs text-purple-700 dark:text-purple-300 mt-1">
+              Har kuni o'qishda davom eting!
+            </p>
+          </CardContent>
+        </Card>
+        <Card className="bg-gradient-to-br from-red-100 to-orange-100 dark:from-red-900 dark:to-orange-900 shadow-xl border-none transform hover:scale-105 transition-transform duration-300">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-red-800 dark:text-red-200">
+              Yangi bildirishnomalar
+            </CardTitle>
+            <Bell className="h-5 w-5 text-red-600 dark:text-red-400" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-red-900 dark:text-red-100">
+              {unreadNotifications.length}
+            </div>
+            <p className="text-xs text-red-700 dark:text-red-300 mt-1">
+              O'qilmagan bildirishnomalar
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 ">
+        <Card className="col-span-2 shadow-xl border-none bg-white">
+          <CardHeader className="flex flex-row items-center justify-between">
+            <CardTitle className="text-xl font-semibold">
+              Yaqinlashib kelayotgan topshiriqlar
+            </CardTitle>
+            <button className="btn btn-sm h-9  border border-gray-300 hover:bg-gray-100 bg-transparent">
+              <Link href="/assignments" className="flex">
+                Barchasini ko'rish <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </button>
+          </CardHeader>
+          <CardContent>
+            {recentAssignments.length === 0 ? (
+              <p className="text-muted-foreground text-center py-4">
+                Hozircha yaqinlashib kelayotgan topshiriqlar yo'q.
+              </p>
+            ) : (
+              <div className="space-y-4">
+                {recentAssignments.map((assignment) => (
+                  <div
+                    key={assignment.id}
+                    className=" flex items-center justify-between p-3 rounded-lg hover:bg-muted transition-colors"
+                  >
+                    <div className="">
+                      <Link
+                        href={`/assignments/${assignment.id}`}
+                        className="font-semibold font-sans text-lg text-[#09090B] hover:underline"
+                      >
+                        {assignment.title}
+                      </Link>
+                      <p className="text-sm text-[#71717A]">
+                        {assignment.subject?.name} -{" "}
+                        {format(
+                          new Date(assignment.deadline),
+                          "MMM d, yyyy HH:mm"
+                        )}
+                      </p>
+                    </div>
+                    <div
+                      className={
+                        assignment.completed ? "bg-green-500 text-white" : ""
+                      }
+                    >
+                      {assignment.completed ? "Bajarilgan" : "Kutilmoqda"}
+                    </div>
                   </div>
-                </div>
-                <ul
-                  tabIndex={0}
-                  className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-                >
-                  <li>
-                    <a className="justify-between">
-                      Profile
-                      <span className="badge">New</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a>Settings</a>
-                  </li>
-                  <li>
-                    <a>Logout</a>
-                  </li>
-                </ul>
+                ))}
               </div>
-            </div>
-          </div>
-        </div>
-      </header>
+            )}
+          </CardContent>
+        </Card>
 
-      {/* ==================== main section ====================== */}
+        <Card className="shadow-xl border-none bg-white">
+          <CardHeader>
+            <CardTitle className="text-xl font-semibold">
+              Tezkor harakatlar
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="grid gap-3">
+            <button className="w-full justify-start bg-transparent hover:bg-accent hover:text-accent-foreground">
+              <Link href="/assignments/new">
+                <CheckCircle className="mr-2 h-4 w-4" /> Yangi topshiriq
+                qo'shish
+              </Link>
+            </button>
+            <button className="w-full justify-start bg-transparent hover:bg-accent hover:text-accent-foreground">
+              <Link href="/study-sessions/new">
+                <BookOpen className="mr-2 h-4 w-4" /> O'qish sessiyasini
+                boshlash
+              </Link>
+            </button>
+            <button className="w-full justify-start bg-transparent hover:bg-accent hover:text-accent-foreground">
+              <Link href="/goals/new">
+                <CalendarDays className="mr-2 h-4 w-4" /> Yangi maqsad qo'shish
+              </Link>
+            </button>
+            <button className="w-full justify-start bg-transparent hover:bg-accent hover:text-accent-foreground">
+              <Link href="/subjects/new">
+                <BookOpen className="mr-2 h-4 w-4" /> Yangi fan qo'shish
+              </Link>
+            </button>
+          </CardContent>
+        </Card>
 
-      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        {/* Stats Cards */}
-        <div className="mb-8 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <div className="card bg-base-100 shadow-sm border-2  border-base-200 p-5">
-            <div className="card-header flex flex-row items-center justify-between space-y-0 pb-2">
-              <h2 className="card-title text-sm font-semibold">
-                Total Subjects
-              </h2>
-              <FiBookOpen className="h-4 w-4 text-muted-foreground opacity-50" />
-            </div>
-            <p className="card-content">
-              <div className="text-2xl font-bold">0</div>
-              <p className="text-xs opacity-75">
-                {/* {getUsagePercentage}/{getSubjectLimit} used */}10
+        <Card className="col-span-full shadow-xl border-none bg-white">
+          <CardHeader>
+            <CardTitle className="text-xl font-semibold">
+              O'qish sessiyalari
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {upcomingSessions.length === 0 ? (
+              <p className="text-muted-foreground text-center py-4">
+                Hozircha rejalashtirilgan o'qish sessiyalari yo'q.
               </p>
-            </p>
-          </div>
-
-          <div className="card bg-base-100 shadow-sm border-2  border-base-200 p-5">
-            <div className="card-header flex flex-row items-center justify-between space-y-0 pb-2">
-              <h2 className="card-title text-sm font-semibold">Assignments</h2>
-              <FiCalendar className="h-4 w-4 text-muted-foreground opacity-50" />
-            </div>
-            <p className="card-content">
-              <div className="text-2xl font-bold">0</div>
-              <p className="text-xs opacity-60">0 completed</p>
-            </p>
-          </div>
-
-          <div className="card bg-base-100  shadow-sm border-2  border-base-200 p-5">
-            <div className="card-header flex flex-row items-center justify-between space-y-0 pb-2">
-              <h2 className="card-title text-sm font-semibold">Study Hours</h2>
-              <CiClock2 className="h-4 w-4 text-muted-foreground" />
-            </div>
-            <p className="card-content">
-              <div className="text-2xl font-bold">0 h</div>
-              <p className="text-xs opacity-60">This week</p>
-            </p>
-          </div>
-
-          <div className="card bg-base-100  shadow-sm border-2  border-base-200 p-5">
-            <div className="card-header flex flex-row items-center justify-between space-y-0 pb-2">
-              <h2 className="card-title text-sm font-semibold">
-                Current Streak
-              </h2>
-              <FiTarget className="h-4 w-4 text-muted-foreground opacity-50" />
-            </div>
-            <p className="card-content">
-              <div className="text-2xl font-bold">0</div>
-              <p className="text-xs  opacity-60">Days</p>
-            </p>
-          </div>
-        </div>
-
-        <div className="grid gap-6 lg:grid-cols-3">
-          {/* Progress Overview */}
-          <div className="card bg-base-100 lg:col-span-2 flex flex-col gap-8 border-2 p-5">
-            <div className="card-header">
-              <h2 className="card-title text-2xl font-bold">
-                Progress Overview
-              </h2>
-              <p className="card-description text-sm font-semibold text-base-content opacity-60">
-                Your academic progress at a glance
-              </p>
-            </div>
-            <p className="card-content space-y-6">
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-semibold">
-                    Assignment Completion
-                  </span>
-                  <span className="text-sm font-semibold opacity-60">0 %</span>
-                </div>
-                {/* ================ completion rate ============================ */}
-                <div className="h-2 relative  w-full overflow-hidden rounded-full bg-gray-100" />
+            ) : (
+              <div className="space-y-4">
+                {upcomingSessions.map((session) => (
+                  <div
+                    key={session.id}
+                    className="flex items-center justify-between p-3 rounded-lg hover:bg-muted transition-colors"
+                  >
+                    <div>
+                      <p className="font-medium text-foreground">
+                        {session.subject?.name}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        {session.assignment?.title
+                          ? `${session.assignment.title} - `
+                          : ""}
+                        {format(
+                          new Date(session.start_time),
+                          "MMM d, yyyy HH:mm"
+                        )}
+                        {session.end_time
+                          ? ` - ${format(new Date(session.end_time), "HH:mm")}`
+                          : ""}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="flex items-center space-x-2">
-                  <FiCheckCircle className="h-4 w-4 text-green-500" />
-                  <span className="text-sm font-semibold">Completed: 0</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <LuCircleAlert className="h-4 w-4 text-orange-500 " />
-                  <span className="text-sm font-semibold">Upcoming: 0</span>
-                </div>
-              </div>
-            </p>
-          </div>
-
-          {/* Quick Actions */}
-          <div className="card bg-base-100 border-2  p-5 flex flex-col gap-5">
-            <div className="card-header">
-              <h2 className="text-2xl font-bold">Quick Actions</h2>
-              <p className="card-description font-semibold opacity-50">
-                Get started with common tasks
-              </p>
-            </div>
-            <p className="card-content space-y-3">
-              <Link
-                to="/subjects/new"
-                className="btn w-full justify-start text-base-100 bg-blue-600 hover:bg-blue-500"
-              >
-                <FaPlus className="mr-2 h-4 w-4" />
-                Add Subject
-              </Link>
-
-              <Link
-                to="/assignments/new"
-                className="w-full justify-start border btn bg-transparent"
-              >
-                <FaPlus className="mr-2 h-4 w-4" />
-                Create Assignment
-              </Link>
-
-              <Link
-                to="/subjects"
-                className="w-full justify-start btn bg-transparent"
-              >
-                <FiBookOpen className="mr-2 h-4 w-4" />
-                View All Subjects
-              </Link>
-
-              <Link
-                to="/assignments"
-                className="w-full justify-start btn bg-transparent"
-              >
-                <FiCalendar className="mr-2 h-4 w-4" />
-                View Assignments
-              </Link>
-
-              <Link
-                href="/pricing"
-                className="w-full justify-start btn bg-transparent"
-              >
-                <IoMdTrendingUp className="mr-2 h-4 w-4" />
-                Upgrade to Pro
-              </Link>
-            </p>
-          </div>
-        </div>
-      </main>
-    </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </main>
   );
 }
-
-export default Dashboard;

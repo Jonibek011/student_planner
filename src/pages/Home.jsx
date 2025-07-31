@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 function Home() {
   return (
-    <div>
+    <div className="m-0">
       <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
@@ -258,6 +258,28 @@ function Home() {
           </div>
         </div>
       </footer>
+
+      {/* ================ Home content ==========================
+       */}
+
+      <section className="flex flex-col items-center justify-center min-h-[calc(100vh-3.5rem)] text-center px-4 py-12 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-950 dark:to-purple-950">
+        <h1 className="text-5xl font-bold text-gray-900 mb-4 dark:text-white">
+          O'qishni osonlashtiring
+        </h1>
+        <p className="text-xl text-gray-600 mb-8 max-w-2xl dark:text-gray-300">
+          Student Planner - bu sizning o'qish jarayoningizni tashkil qilish,
+          topshiriqlarni kuzatish va maqsadlaringizga erishish uchun yordam
+          beradigan eng yaxshi vosita.
+        </p>
+        <div className="space-x-4">
+          <button className=" btn  bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-8">
+            <Link to="/register">Boshlash</Link>
+          </button>
+          <button className="btn border border-blue-600 text-blue-600 px-8 bg-transparent hover:border-blue-600 hover:text-gray-900 hover:bg-slate-100 ">
+            <Link to="/learn">Darslarni ko'rish</Link>
+          </button>
+        </div>
+      </section>
     </div>
   );
 }
