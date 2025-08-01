@@ -1,17 +1,23 @@
-import { IoIosArrowDown } from "react-icons/io";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FiHome } from "react-icons/fi";
 import { IoBookOutline } from "react-icons/io5";
 import { PiCalendarCheckDuotone } from "react-icons/pi";
 import { TbTargetArrow } from "react-icons/tb";
 import { FaXmark } from "react-icons/fa6";
 import { LuBookOpen } from "react-icons/lu";
-function MobileSidebar({ setOpenSidebar }) {
+//global context
+import { useGlobalContext } from "../hooks/useGlobalContext";
+//main function
+function MobileSidebar() {
+  const { openSidebar, dispatch } = useGlobalContext();
+  const toggleSidebar = () => {
+    dispatch({ type: "CHANGE", payload: openSidebar === true ? false : true });
+  };
   return (
     <div className={`h-full  border-r-2 p-1 relative`}>
       <span
         className="absolute top-4 right-2 cursor-pointer"
-        onClick={() => setOpenSidebar(false)}
+        onClick={toggleSidebar}
       >
         <FaXmark className="w-5 h-5" />
       </span>
@@ -22,7 +28,7 @@ function MobileSidebar({ setOpenSidebar }) {
         <div className="menu-list">
           <ul className="pl-0 list-none  flex flex-col gap-4 ">
             <li className="">
-              <Link onClick={() => setOpenSidebar(false)} to="/dashboard">
+              <Link onClick={toggleSidebar} to="/dashboard">
                 {" "}
                 <span>
                   <FiHome className="w-5 h-5 " />
@@ -35,7 +41,7 @@ function MobileSidebar({ setOpenSidebar }) {
 
             <li>
               <Link
-                onClick={() => setOpenSidebar(false)}
+                onClick={toggleSidebar}
                 to="/subjects"
                 className="flex gap-2 items-center font-extralight]"
               >
@@ -50,7 +56,7 @@ function MobileSidebar({ setOpenSidebar }) {
 
             <li>
               <Link
-                onClick={() => setOpenSidebar(false)}
+                onClick={toggleSidebar}
                 to="/login"
                 className="text-[#3F3F46]"
               >
@@ -65,7 +71,7 @@ function MobileSidebar({ setOpenSidebar }) {
 
             <li>
               <Link
-                onClick={() => setOpenSidebar(false)}
+                onClick={toggleSidebar}
                 to="fanlar"
                 className="text-[#3F3F46]"
               >

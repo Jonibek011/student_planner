@@ -12,10 +12,16 @@ import {
 } from "../../components/ui/card";
 
 import { mockDataService, mockUsers } from "../../lib/mockData";
-
+//global context
+import { useGlobalContext } from "../../hooks/useGlobalContext";
+//window siza
+import { useWindowSize } from "../../hooks/useWindowSize";
+//main function
 const MainSubject = () => {
   const [subjects, setSubjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { openSidebar } = useGlobalContext();
+  const { width, height } = useWindowSize();
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -29,7 +35,7 @@ const MainSubject = () => {
   }, []);
 
   if (loading) {
-    return <p>Yuklanmoqda...</p>;
+    return;
   }
 
   return (
@@ -45,7 +51,11 @@ const MainSubject = () => {
         </Link>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div
+        className={`grid gap-4 md:${
+          openSidebar && width < 900 ? "grid-cols-1 " : "grid-cols-2"
+        } lg:${openSidebar && width < 1170 ? "grid-cols-2 " : "grid-cols-3"}`}
+      >
         {subjects.length === 0 ? (
           <p className="text-muted-foreground col-span-full text-center py-8">
             Hozircha fanlar yo'q. Yangisini qo'shing!
@@ -81,8 +91,13 @@ const MainSubject = () => {
                   >
                     <FaRegEdit className="h-4 w-4 mr-1" /> Ko'rish
                   </Link>
-                  <button className="btn btn-sm h-9 text-white bg-red-300">
-                    <FaRegTrashAlt className="h-4 w-4 mr-1" /> O'chirish
+                  <button
+                    disabled
+                    className="btn disabled:bg-red-300 disabled:text-white btn-sm h-9 inline-flex items-center gap-2 justify-center
+                   text-white bg-red-500 hover:bg-red-400"
+                  >
+                    <FaRegTrashAlt className="h-4 w-4 " />{" "}
+                    <span className="">O'chirish</span>
                   </button>
                 </div>
               </CardContent>

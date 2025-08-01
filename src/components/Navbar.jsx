@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { LuPanelLeft } from "react-icons/lu";
-function Navbar({ setOpenSidebar }) {
+import { useGlobalContext } from "../hooks/useGlobalContext";
+//main function
+function Navbar() {
+  const { openSidebar, dispatch } = useGlobalContext();
   const toggleMenu = () => {
-    setOpenSidebar((prev) => {
-      return prev === true ? false : true;
-    });
+    dispatch({ type: "CHANGE", payload: openSidebar === true ? false : true });
   };
   return (
     <div className="flex bg-transparent ">

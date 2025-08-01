@@ -16,6 +16,8 @@ import {
 import { Link } from "react-router-dom";
 import { mockDataService, mockUsers } from "../lib/mockData";
 import { format } from "date-fns";
+import { useGlobalContext } from "../hooks/useGlobalContext";
+//main function
 export default function DashboardPage() {
   const [dashboardStats, setDashboardStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -52,6 +54,11 @@ export default function DashboardPage() {
     upcomingSessions,
     unreadNotifications,
   } = dashboardStats;
+
+  const { onSidebar } = useGlobalContext();
+
+  console.log(onSidebar);
+
   return (
     <main className="flex flex-1 mx-6  flex-col gap-6 p-6 md:gap-10 md:p-8 bg-gray-50 dark:bg-gray-900 rounded-xl shadow-inner min-h-[90vh]">
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">

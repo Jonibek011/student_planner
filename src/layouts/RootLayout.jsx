@@ -4,11 +4,15 @@ import { useState } from "react";
 import ErrorBoundary from "../components/ErrorBoundary";
 import { useLocation } from "react-router-dom";
 import { useWindowSize } from "../hooks/useWindowSize";
+import { useGlobalContext } from "../hooks/useGlobalContext";
+
+//main function
 function RootLayout() {
   const { width, height } = useWindowSize();
   const location = useLocation();
   const hideSidebar = location.pathname.endsWith("/");
-  const [openSidebar, setOpenSidebar] = useState(true);
+
+  const { openSidebar, dispatch } = useGlobalContext();
   return (
     <div className="min-h-screen px-0  flex ">
       {!hideSidebar && (
@@ -24,7 +28,12 @@ function RootLayout() {
           {width > 639 && width < 768 && (
             <div>
               <span
-                onClick={() => setOpenSidebar(false)}
+                onClick={() =>
+                  dispatch({
+                    type: "CHANGE",
+                    payload: openSidebar === true ? false : true,
+                  })
+                }
                 className={`absolute top-0 left-0  ${
                   openSidebar ? "w-full" : "w-0"
                 } h-full bg-black/80 z-10`}
@@ -52,7 +61,7 @@ function RootLayout() {
                   openSidebar ? "left-0" : "left-[-100%]"
                 }  z-20 h-full bg-white`}
               >
-                <MobileSidebar setOpenSidebar={setOpenSidebar} />
+                <MobileSidebar />
               </div>
             </div>
           )}
@@ -63,7 +72,7 @@ function RootLayout() {
           openSidebar && !hideSidebar && width > 767 ? "ml-64" : "ml-0"
         }`}
       >
-        {!hideSidebar && <Navbar setOpenSidebar={setOpenSidebar} />}
+        {!hideSidebar && <Navbar />}
         <main className="h-[calc(100%-4rem)] overflow-y-auto  bg-base-100">
           <Outlet />
         </main>
