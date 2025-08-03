@@ -1,7 +1,14 @@
 //Root layout
 import RootLayout from "./layouts/RootLayout";
 //pages
-import { Home, Login, Register, Dashboard, MainSubject } from "./pages";
+import {
+  Home,
+  Login,
+  Register,
+  Dashboard,
+  MainSubject,
+  SubjectId,
+} from "./pages";
 //react-router-dom
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -22,6 +29,10 @@ function App() {
         {
           path: "subjects",
           element: <MainSubject />,
+        },
+        {
+          path: "subjects/:id",
+          element: <SubjectId />,
         },
       ],
     },

@@ -33,7 +33,7 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh] bg-background rounded-lg shadow-md p-8">
-        <p className="text-lg text-muted-foreground">Yuklanmoqda...</p>
+        <span className="loading loading-spinner loading-lg"></span>
       </div>
     );
   }

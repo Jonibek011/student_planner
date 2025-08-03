@@ -3,7 +3,11 @@ import { forwardRef } from "react";
 import { cn } from "../../lib/Utils";
 
 const Card = forwardRef(({ className = "", ...props }, ref) => (
-  <div ref={ref} className={cn("rounded-xl border   ", className)} {...props} />
+  <div
+    ref={ref}
+    className={cn("rounded-xl  border-2   ", className)}
+    {...props}
+  />
 ));
 Card.displayName = "Card";
 
@@ -16,26 +20,28 @@ const CardHeader = forwardRef(({ className = "", ...props }, ref) => (
 ));
 CardHeader.displayName = "CardHeader";
 
-const CardTitle = forwardRef(({ className = "", ...props }, ref) => (
-  <h3
-    ref={ref}
-    className={cn("font-semibold leading-none tracking-tight", className)}
-    {...props}
-  />
-));
+const CardTitle = forwardRef(
+  ({ className = "text-[#09090B]", ...props }, ref) => (
+    <h3
+      ref={ref}
+      className={cn("font-semibold leading-none tracking-tight", className)}
+      {...props}
+    />
+  )
+);
 CardTitle.displayName = "CardTitle";
 
 const CardDescription = forwardRef(({ className = "", ...props }, ref) => (
-  <p
-    ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
-    {...props}
-  />
+  <p ref={ref} className={cn("text-sm ", className)} {...props} />
 ));
 CardDescription.displayName = "CardDescription";
 
 const CardContent = forwardRef(({ className = "", ...props }, ref) => (
-  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
+  <div
+    ref={ref}
+    className={cn("p-6 pt-0 text-[#71717B]", className)}
+    {...props}
+  />
 ));
 CardContent.displayName = "CardContent";
 
