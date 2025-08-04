@@ -8,6 +8,8 @@ import {
   Dashboard,
   MainSubject,
   SubjectId,
+  NewSubject,
+  Assignment,
 } from "./pages";
 //react-router-dom
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -33,6 +35,14 @@ function App() {
         {
           path: "subjects/:id",
           element: <SubjectId />,
+        },
+        {
+          path: "subjects/new",
+          element: <NewSubject />,
+        },
+        {
+          path: "assignments",
+          element: <Assignment />,
         },
       ],
     },

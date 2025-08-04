@@ -4,7 +4,7 @@ import { FiHome } from "react-icons/fi";
 import { IoBookOutline } from "react-icons/io5";
 import { PiCalendarCheckDuotone } from "react-icons/pi";
 import { TbTargetArrow } from "react-icons/tb";
-function SIdebar({ openSidebar }) {
+function SIdebar() {
   return (
     <div className={`h-full  border-r-2 p-1`}>
       <div className="dropdown w-full">
@@ -52,7 +52,7 @@ function SIdebar({ openSidebar }) {
             </li>
 
             <li>
-              <NavLink to="/login" className="text-[#3F3F46]">
+              <NavLink to="/assignments" className="text-[#3F3F46]">
                 <span>
                   <PiCalendarCheckDuotone className="  w-4 h-4" />{" "}
                 </span>

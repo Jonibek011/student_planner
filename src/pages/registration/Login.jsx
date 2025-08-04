@@ -1,63 +1,96 @@
-import { InputForm } from "../../components";
-import { Form } from "react-router-dom";
-import { PiGoogleChromeLogoBold } from "react-icons/pi";
-import { Link } from "react-router-dom";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../../components/ui/card";
+
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useAuth } from "../../hooks/UseAuth";
+import { toast } from "react-toastify";
+
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { signIn, isLoading } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const result = await signIn(email, password);
+    if (result.success) {
+      toast("Hisobingiz yaratildi. Endi kirishingiz mumkin.");
+      navigate("/dashboard");
+    } else {
+      toast(result.error || "Ro'yxatdan o'tishda xatolik yuz berdi.");
+    }
+  };
   return (
-    <div className="w-full h-screen flex justify-center items-center">
-      <div className="border   my-auto  p-6 border-gray-300 max-w-[446px] w-[446px] mx-auto rounded-xl ">
-        <h2 className="text-2xl font-bold text-center text-[#020817]">
-          Sign in
-        </h2>
-        <p className="text-center text-[#64748B] mt-1 mb-6 text-sm">
-          Enter your information to get start with StuudyFlow
-        </p>
-        <button className="w-full border py-2 text-center flex justify-center gap-4 rounded-lg hover:bg-gray-100">
-          <span>
-            <PiGoogleChromeLogoBold />
-          </span>
-          <span className="text-sm">Continue with Google</span>
-        </button>
-
-        <div className="relative mt-5">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
+    <div className="flex min-h-[calc(100vh-3.5rem)] items-center justify-center bg-gray-50 px-4 py-12 dark:bg-gray-900">
+      <Card className="w-full max-w-md bg-white shadow">
+        <CardHeader className="text-center flex flex-col">
+          <CardTitle className="text-3xl font-bold">Kirish</CardTitle>
+          <CardDescription className="text-[#71717A]">
+            Hisobingizga kirish uchun email va parolingizni kiriting.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="grid gap-4">
+            <div className="grid gap-2">
+              <label htmlFor="email" className="text-sm text-[#18181B]">
+                Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                placeholder="example@gmail.com"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={isLoading}
+                className=" input input-sm h-10 border text-[#18181B]  border-gray-200   focus:outline   outline-offset-4 placeholder:text-[#8b8b9b]"
+                style={{ outlineWidth: "3px", outlineColor: "#393942" }}
+              />
+            </div>
+            <div className="grid gap-2">
+              <label htmlFor="password" className="text-sm text-[#18181B]">
+                Parol
+              </label>
+              <input
+                id="password"
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                disabled={isLoading}
+                className=" input input-sm h-10 border text-[#18181B]  border-gray-200   focus:outline   outline-offset-4 placeholder:text-[#8b8b9b]"
+                style={{ outlineWidth: "3px", outlineColor: "#393942" }}
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full btn btn-sm bg-[#18181B]  hover:bg-[#38383f]  h-10 text-white disabled:opacity-50 disabled:bg-[#18181B]"
+              disabled={isLoading}
+            >
+              {isLoading ? "Kirilmoqda..." : "Kirish"}
+            </button>
+            <button
+              className="w-full bg-transparent btn btn-sm h-10 hover:bg-gray-50 border"
+              disabled={isLoading}
+            >
+              Google bilan kirish
+            </button>
+          </form>
+          <div className="mt-4 text-center text-sm text-[#09090B]">
+            Hisobingiz yo'qmi?{" "}
+            <Link to="/register" className="underline">
+              Ro'yxatdan o'tish
+            </Link>
           </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white px-2 text-muted-foreground">
-              Or continue with email
-            </span>
-          </div>
-        </div>
-
-        <Form method="post" className="mt-5 flex flex-col gap-5">
-          <InputForm
-            type="email"
-            name="email"
-            placeholder="Enter your email"
-            label="Email"
-          />
-
-          <InputForm
-            className=""
-            type="password"
-            name="password"
-            placeholder="Create your password"
-            label="Password"
-          />
-
-          <button className="btn font-sans bg-blue-600 hover:bg-blue-500 text-white">
-            Sign in
-          </button>
-        </Form>
-
-        <div className="text-center mt-4 font-sans font-medium">
-          Don't you have an account?{" "}
-          <Link to="/register" className="text-blue-600">
-            Register
-          </Link>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

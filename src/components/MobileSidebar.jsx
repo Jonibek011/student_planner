@@ -56,8 +56,8 @@ function MobileSidebar() {
 
             <li>
               <Link
+                to="/assignments"
                 onClick={toggleSidebar}
-                to="/login"
                 className="text-[#3F3F46]"
               >
                 <span>
